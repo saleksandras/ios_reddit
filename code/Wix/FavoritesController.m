@@ -35,8 +35,8 @@
     [super viewWillAppear:animated];
     _favorites = [Favorites new];
     if (self.favorites.items.count == 0) {
-        //UIAlertController is a bad idea, but it's better that empty screen
-        //Better solution would to use some empty state image, but I don't have much for this.
+        // UIAlertController is a bad UX, but it's better that empty screen
+        // Better solution would to use some empty state image, but I don't have much time for this.
         UIAlertController * alert = [UIAlertController
                                      alertControllerWithTitle:@"Favorites"
                                      message:@"Add some by clicking top right icon in details view"
@@ -70,17 +70,17 @@
     NSDictionary *post = self.favorites.items[indexPath.row];
     
     cell.titleLabel.text = post[@"title"];
-    if ([post objectForKey:@"thumbnail"]) {
+    if ([post objectForKey:@"thumbnail"] &&
+        ![post[@"thumbnail"] isEqualToString:@"self"] &&
+        ![post[@"thumbnail"] isEqualToString:@"default"]) {
         [[Api sharedInstance] imageWithURL:post[@"thumbnail"]
                                    success:^(UIImage *image) {
                                        cell.thumbImageView.image = image;
                                    } failure:^(NSError *error) {
-                                       cell.thumbImageView.hidden = true;
-                                       cell.thumbImageView.image = nil;
+                                       [cell hideImage];
                                    }];
     } else {
-        cell.thumbImageView.hidden = true;
-        //[cell.thumbImageView removeFromSuperview];
+        [cell hideImage];
     }
     return cell;
 }

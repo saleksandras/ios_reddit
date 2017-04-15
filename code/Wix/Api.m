@@ -29,7 +29,6 @@
     return __sharedInstance;
 }
 
-
 - (id)initWithBaseURL:(NSURL *)url
 {
     self = [super init];
@@ -43,11 +42,10 @@
     return self;
 }
 
-
--(void)getRedisTopWithAfter:(NSString *)after
-                     before:(NSString *)before
-              success:(CRJSONResponseBlock) successBlock
-              failure:(CRFailureBlock) failureBlock
+-(void)getRedditTopWithAfter:(NSString *)after
+                      before:(NSString *)before
+                     success:(CRJSONResponseBlock) successBlock
+                     failure:(CRFailureBlock) failureBlock
 {
     NSString *url = @"/top.json?limit=25";
     if (after) {
@@ -59,18 +57,34 @@
                                   ^(NSData *data, NSURLResponse *response, NSError *error) {
                                       if (error) {
                                           failureBlock(error);
-                                          
+                                          return;
                                       }
-                                      // Success
-                                      NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                                                   options:0
-                                                                                                     error:nil];
-                                      successBlock(jsonResponse);
+                                      if (data) {
+                                          NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                                                       options:0
+                                                                                                         error:nil];
+                                          successBlock(jsonResponse);
+                                          return;
+                                      }
+                                      
+                                      NSDictionary *userInfo = @{
+                                                                 NSLocalizedDescriptionKey: NSLocalizedString(@"Operation was unsuccessful.", nil),
+                                                                 NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"The operation timed out.", nil),
+                                                                 NSLocalizedRecoverySuggestionErrorKey: NSLocalizedString(@"Have you tried turning it off and on again?", nil)
+                                                                 };
+                                      error = [NSError errorWithDomain:@"com.miror.rediswix"
+                                                                           code:kCFHostErrorUnknown
+                                                                       userInfo:userInfo];
+                                      failureBlock(error);
+                                      return;
                                   }];
     
     [task resume];
 }
 
+ /**
+  * Returning NSURLSessionTask so it would be possible to cancel when row is not visible
+  */
 - (NSURLSessionTask *)imageWithURL:(NSString *)url
                            success:(CRImageBlock)successBlock
                            failure:(CRFailureBlock)failureBlock

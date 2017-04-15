@@ -31,7 +31,6 @@
     [SVProgressHUD show];
     
     NSString *urlString = [@"https://www.reddit.com" stringByAppendingString:self.post[@"permalink"]];
-    NSLog(@"url: %@", urlString);
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
     [urlRequest setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
@@ -52,6 +51,13 @@
                                    action:@selector(favBtnClicked:)];
     self.navigationItem.rightBarButtonItem = favButton;
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //Dismiss HUD in case user will click back button while post is not yet loaded
+    [SVProgressHUD dismiss];
 }
 
 - (void)didReceiveMemoryWarning {

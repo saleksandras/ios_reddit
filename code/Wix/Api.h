@@ -17,10 +17,10 @@ typedef void (^CRFailureBlock)(NSError *error);
 
 + (id)sharedInstance;
 
--(void)getRedisTopWithAfter:(NSString *)after
-                     before:(NSString *)before
-                    success:(CRJSONResponseBlock) successBlock
-                    failure:(CRFailureBlock) failureBlock;
+-(void)getRedditTopWithAfter:(NSString *)after
+                      before:(NSString *)before
+                     success:(CRJSONResponseBlock) successBlock
+                     failure:(CRFailureBlock) failureBlock;
 
 - (NSURLSessionTask *)imageWithURL:(NSString *)url
                            success:(CRImageBlock)successBlock

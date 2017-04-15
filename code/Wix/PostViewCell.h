@@ -12,5 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *thumbWidthConstraint;
+
+-(void)hideImage;
 
 @end
