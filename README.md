@@ -52,8 +52,8 @@ Good luck!
 
 ## Screenshots
 
+![gif](https://github.com/saleksandras/ios_reddit/blob/master/screenshots/reddit.gif "GIF")
 ![top list](https://github.com/saleksandras/ios_reddit/blob/master/screenshots/top.png "Top list")
-![top list](https://github.com/saleksandras/ios_reddit/blob/master/screenshots/top2.png "Top list 2")
 ![favorites](https://github.com/saleksandras/ios_reddit/blob/master/screenshots/favorites.png "Favorites")
 ![webview](https://github.com/saleksandras/ios_reddit/blob/master/screenshots/webview.png "Webview")
 ![search](https://github.com/saleksandras/ios_reddit/blob/master/screenshots/search.png "Search")
